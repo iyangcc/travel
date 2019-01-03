@@ -1,0 +1,122 @@
+* {
+    malgin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url("../images/login_bg.png") no-repeat;
+    background-size: cover;
+    min-width: 1300px;
+}
+
+.lg_layout {
+    width: 600px;
+    height: 650px;
+    color: #fff;
+    background: rgba(0,0,0,0.3);
+    float: right;
+    margin: 100px;
+    padding: 60px;
+}
+
+.lg_title {
+    width: 240px;
+    padding: 15px;
+}
+
+.lg_title span:first-child,.lg_title img {
+    display: inline-block;
+}
+
+.lg_title span:nth-child(2) {
+    vertical-align: top;
+    margin-left: 20px;
+    color: #ffffff;
+    font-size: 32px;
+    line-height: 56px;
+}
+
+.lg_title p:last-child {
+    font-size: 24px;
+    color: orange;
+}
+
+.lg_register {
+    padding: 15px;
+}
+
+.lg_register a {
+    color: #C81623;
+}
+
+.lg_register a:hover {
+    color: #f59e00;
+}
+
+.lg_center table {
+    malgin-top: 40px;
+}
+
+.lg_center table tr td:first-child {
+    text-align: right;
+    line-height: 60px;
+}
+
+.lg_center table tr td:last-child {
+    padding-left: 40px;
+}
+
+.input_s {
+    width: 360px;
+    height: 40px;
+    color: #030303;
+    border: 1px solid #727272;
+    border-radius: 7px;
+    padding-left: 15px;
+    outline-style: none;
+}
+
+#checkcode {
+    width: 200px;
+}
+
+#vcode {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.lg_center table tr:last-child td {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.lg_center input[type=submit] {
+    width: 120px;
+    height: 40px;
+    background: orange;
+    border: none;
+    color: #333333;
+    line-height: normal;
+}
+
+#errorMsg {
+    display: none;
+    background: rgba(220,220,220,.6);
+    height: 40px;
+}
+
+#errorMsg button {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    margin: auto 0 auto 10px;
+}
+
+#msg {
+    display: inline-block;
+    width: 90%;
+    text-align: center;
+    color: red;
+    line-height: 40px;
+}

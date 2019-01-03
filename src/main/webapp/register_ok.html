@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>注册</title>
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" href="css/register.css">
+		<!--导入jquery-->
+		<script src="js/jquery-3.3.1.js"></script>
+        <script>
+            $(function () {
+                $.get("simple_nav.html",function (data) {
+                    $("#header").html(data);
+                });
+            })
+        </script>
+    </head>
+    <body style="background:#fff;">
+    <!--引入头部-->
+    <div id="header"></div>
+    <!-- 头部 end -->
+    <div style="border: 1px solid #c1c3c9;width: 80%;margin: 200px auto 0;">
+        <div style="text-align:center;padding:20px 20px;font-size:30px;height:200px;line-height: 160px;">
+            <h4>恭喜，<span style="color: red">注册成功！</span>请登录您的注册邮箱进行激活您的账号，激活后才能登录。</h4>
+        </div>
+    </div>
+    </body>
+</html>

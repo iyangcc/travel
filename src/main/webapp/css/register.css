@@ -1,0 +1,112 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: url("../images/register_bg.png") no-repeat;
+	background-size: cover;
+}
+
+.rg_layout {
+	width: 1000px;
+	height: 700px;
+	background: rgba(0,0,0,0.5);
+	border: 1px solid #727272;
+	margin: 100px auto 0;
+}
+
+.rg_left {
+	float: left;
+	width: 320px;
+	padding: 15px;
+}
+
+.rg_left p:first-child {
+	color: #e0e0e0;
+	font-size: 20px;
+}
+
+.rg_left p:last-child {
+	font-size: 24px;
+	color: orange;
+}
+
+.rg_msg{
+	display: none;
+	float: left;
+	width: 400px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background: gainsboro;
+	margin-top: 60px;
+	color: #C81623;
+}
+
+.rg_center {
+	width: 500px;
+	margin: -30px auto 0;
+}
+
+.rg_right {
+	float: right;
+	padding: 15px;
+	color: #e0e0e0;
+}
+
+.rg_right a {
+	color: #C81623;
+}
+
+.rg_center table {
+	color: #e0e0e0;
+	margin-top: 40px;
+}
+
+.rg_center table tr td:first-child {
+	text-align: right;
+	line-height: 60px;
+}
+
+.rg_center table tr td:last-child {
+	padding-left: 40px;
+}
+
+.input_s {
+	width: 360px;
+	height: 40px;
+	border: 1px solid #727272;
+	color: #030303;
+	border-radius: 7px;
+	padding-left: 15px;
+	outline-style: none;
+}
+
+#checkcode {
+	width: 200px;
+}
+
+#vcode {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.rg_center table tr:last-child td {
+	text-align: center;
+	padding-top: 20px;
+}
+
+.rg_center input[type=submit] {
+	width: 150px;
+	height: 40px;
+	background: orange;
+	line-height: normal;
+	border: none;
+	color: #131313;
+}
+
+.rg_right a:hover {
+	color: darkorange;
+}

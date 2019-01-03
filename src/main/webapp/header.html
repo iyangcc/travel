@@ -1,0 +1,62 @@
+<!-- 头部 start -->
+    <header id="header">
+        <div class="header-top">
+            <div class="fr header-top-right">
+                <div class="shortcut">
+                    <!-- 未登录状态  -->
+                    <div class="login_out" id="login_out">
+                        <a href="login.html">登录</a>
+                        <a href="register.html">注册</a>
+                    </div>
+                    <!-- 登录状态  -->
+                    <div class="login" id="login">
+                        <span id="logged_user">欢迎回来，admin</span>
+                        <a id="my_favorite" href="myfavorite.html" class="collection">我的收藏</a>
+                        <a href="javascript:exitUser();">退出</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="top_banner w">
+            <img src="images/top_banner.jpg" alt="" style="max-width: 1200px">
+        </div>
+        <div class="header_wrap">
+            <div class="topbar">
+                <div class="logo">
+                    <a href="/"><img src="images/logo.jpg" alt=""></a>
+                </div>
+                <div class="search">
+                    <input id="keywords" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
+                    <a href="javascript:;" class="search-button" id="search_button">搜索</a>
+                </div>
+                <div class="hottel">
+                    <div class="hot_pic">
+                        <img src="images/hot_tel.jpg" alt="">
+                    </div>
+                    <div class="hot_tel">
+                        <p class="hot_time">客服热线(9:00-6:00)</p>
+                        <p class="hot_num">400-618-9090</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 头部 end -->
+     <!-- 首页导航 -->
+    <div class="navitem">
+        <ul class="nav" id="category">
+            <li class="nav-active"><a href="index.html">首页</a></li>
+            <li><a href="route_list.html">门票</a></li>
+            <li><a href="route_list.html">酒店</a></li>
+            <li><a href="route_list.html">香港车票</a></li>
+            <li><a href="route_list.html">出境游</a></li>
+            <li><a href="route_list.html">国内游</a></li>
+            <li><a href="route_list.html">港澳游</a></li>
+            <li><a href="route_list.html">抱团定制</a></li>
+            <li><a href="route_list.html">全球自由行</a></li>
+            <li><a href="favoriterank.html">收藏排行榜</a></li>
+        </ul>
+    </div>
+<script src="js/getParameter.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/headerLoad.js"></script>

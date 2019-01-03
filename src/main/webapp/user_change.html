@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 指定字符集 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>修改密码</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link href="css/app.css" rel="stylesheet">
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/getParameter.js"></script>
+    <script src="js/nav-include.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background: url('images/user_center_bg.jpg');
+            background-size: cover;
+        }
+        .form-group div {
+            border: none;
+            padding-left: 50px;
+        }
+    </style>
+    <script>
+        $(function () {
+            var uid = getParameter("uid");
+            var username = getParameter("username");
+
+            $("#username").html(username);
+
+            $("#submitBtn").click(function () {
+                if(!$("#oldPassword").val()){
+                    $("#oldPassword").css("border","1px solid red");
+                    showMsg("密码不能为空");
+                    return ;
+                }else{
+                    $("#oldPassword").css("border","");
+                    hideMsg();
+                }
+                if(!$("#newPassword").val()){
+                    $("#newPassword").css("border","1px solid red");
+                    showMsg("密码不能为空");
+                    return ;
+                }else{
+                    $("#newPassword").css("border","");
+                    hideMsg();
+                }
+                if($("#newPassword").val()!==$("#password").val()){
+                    $("#password").css("border","1px solid red");
+                    showMsg("两次密码不一致！");
+                    return ;
+                }else{
+                    $("#password").css("border","");
+                    hideMsg();
+                }
+                if(!$("#checkcode").val()){
+                    showMsg("请输入验证码！");
+                    return ;
+                }else{
+                    hideMsg();
+                }
+                var params = {};
+                params.uid = uid;
+                params.oldPassword = $("#oldPassword").val();
+                params.newPassword = $("#newPassword").val();
+                params.checkCode = $("#checkcode").val();
+                $.post("user/changePwd",params,function (result) {
+                    if(result.status){
+                        $.cookie("username",null,{ expires: -1,path:"/"});
+                        $.cookie("password",null,{ expires: -1,path:"/" });
+                        location.href = "user/exit";
+                        location.href = "login.html";
+                    }else{
+                        showMsg(result.errorMsg);
+                    }
+                });
+            });
+        });
+
+        //图片点击事件
+        function changeCheckCode(img) {
+            img.src="checkCode?"+new Date().getTime();
+        }
+        /**
+         * 显示提示信息
+         * @param data
+         */
+        function showMsg(data) {
+            $("#error_msg").show();
+            $("#error_msg span:last-child").html(data);
+        }
+        function hideMsg() {
+            $("#error_msg").hide();
+        }
+    </script>
+</head>
+<body>
+<div id="header"></div>
+<div style="padding: 60px">
+    <div class="container" style="width: 800px; background:#fff;">
+        <h3 style="text-align: center;font: 500 22px/60px 'microsoft yahei'">修改密码</h3>
+        <div id="error_msg" class="text-danger text-center" style="display: none;"><span class="glyphicon glyphicon-remove-sign" style="margin-right: 5px"></span><span></span></div>
+        <form method="post" style="padding: 10px 80px 50px; ">
+            <div class="row" style="height: 50px;">
+                <label class="col-md-2 m-t-sm">用户名：</label>
+                <div class="col-md-9" id="username" style="line-height: 34px;"></div>
+            </div>
+            <div class="row" style="height: 50px;">
+                <label class="col-md-2 m-t-sm" for="oldPassword">旧密码：</label>
+                <div class="col-md-9"> <input type="password" class="form-control" id="oldPassword" autocomplete="off"/></div>
+            </div>
+            <div class="row" style="height: 50px;">
+                <label class="col-md-2 m-t-sm" for="newPassword">新密码：</label>
+                <div class="col-md-9"> <input type="password" class="form-control" id="newPassword" autocomplete="off"/></div>
+            </div>
+            <div class="row" style="height: 50px;">
+                <label class="col-md-2 m-t-sm" for="password">确认密码：</label>
+                <div class="col-md-9"> <input type="password" class="form-control" id="password" autocomplete="off"/></div>
+            </div>
+
+            <div class="row" style="height: 50px;">
+                <label class="col-md-2 m-t-sm" for="checkcode">验证码：</label>
+                <div class="col-md-6"> <input type="text" class="form-control" id="checkcode" autocomplete="off"/></div>
+                <div class="col-md-3"> <a href="javascript:void(0);">
+                    <img src="checkCode" onclick="changeCheckCode(this)" title="看不清点击刷新"id="vcode"/>
+                </a></div>
+            </div>
+
+            <div class="form-group m-t-lg" style="text-align: center">
+                <input class="btn btn-info" type="button" id="submitBtn" value="确认修改"/>
+                <a class="btn btn-default" href="javascript:history.go(-1);">返回</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>

@@ -1,0 +1,35 @@
+<header id="header">
+    <div class="header-top">
+        <div class="fl header-top-left"><a href="./index.html">首 页</a></div>
+        <div class="fr header-top-right">
+            <div class="shortcut">
+                <!-- 未登录状态  -->
+                <div class="login_out" id="login_out">
+                    <a href="login.html">登录</a>
+                    <a href="register.html">注册</a>
+                </div>
+                <!-- 登录状态  -->
+                <div class="login" id="login">
+                    <span id="logged_user">欢迎回来，admin</span>
+                    <a href="myfavorite.html" class="collection">我的收藏</a>
+                    <a href="javascript:exitUser();">退出</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<script src="js/jquery.cookie.js"></script>
+<script>
+    $(function () {
+        $.get("user/findOne",{},function (result) {
+            if(result.status){
+                $("#login_out").hide();
+                $("#login").show();
+                $("#logged_user").html("欢迎回来，<a href='javascript:userCenter("+result.data.uid+");' id='userCenter'>"+result.data.name+"</a>");
+            }else{
+                $("#login").hide();
+                $("#login_out").show();
+            }
+        })
+    })
+</script>

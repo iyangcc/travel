@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 指定字符集 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>修改用户信息</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link href="css/app.css" rel="stylesheet">
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/getParameter.js"></script>
+    <script src="js/nav-include.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background: url('images/user_center_bg.jpg');
+            background-size: cover;
+        }
+    </style>
+    <script>
+        $(function () {
+            var id = getParameter("uid");
+
+            $.post("user/center",{uid:id},function (result) {
+                if(result.status){
+                    load(result.data);
+                }
+            });
+
+            $("#name").blur(checkName);
+            $("#tel").blur(checkTel);
+            $("#birthday").blur(checkBirthday);
+
+            $("#submitBtn").click(function () {
+                if(checkAll()){
+                    var params = {};
+                    params.uid = id;
+                    params.name =  $("#name").val();
+                    params.telephone =  $("#tel").val();
+                    params.birthday =  $("#birthday").val();
+                    $.post("user/update",params,function (result) {
+                        if(result.status){
+                            location.href = "http://localhost/travel/user_center.html?uid="+id;
+                        }
+                    });
+                }
+            });
+        });
+        function load(data) {
+            $("#username").val(data.username);
+            if("男"===data.sex){
+                $("#male").prop("checked",true);
+            }else{
+                $("#female").prop("checked",true);
+            }
+            $("#name").val(data.name);
+            $("#email").val(data.email);
+            $("#tel").val(data.telephone);
+            $("#birthday").val(data.birthday);
+        }
+
+        function checkReg(that,reg){
+            if($(that).val()==""||!reg.test($(that).val())){
+                $(that).css("border","2px solid red");
+                return false;
+            }else{
+                $(that).css("border","");
+                return true;
+            }
+        }
+
+        function checkName(){
+            var that = $("#name");
+            return checkReg(that,/^[\u4e00-\u9fa5]{2,13}$/);
+        }
+
+        function checkTel(){
+            var that = $("#tel");
+            return checkReg(that,/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0,3,5-8])|(18[0-9])|166|198|199|(147))\d{8}$/);
+        }
+
+        function checkBirthday(){
+            var that = $("#birthday");
+            return checkReg(that,/^(19|20)\d{2}-(1[0-2]|0?[1-9])-(0?[1-9]|[1-2][0-9]|3[0-1])$/);
+        }
+
+        function checkAll(){
+            if(checkName()&&checkTel()&&checkBirthday()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="header"></div>
+<div style="padding: 60px">
+    <div class="container" style="width: 800px; background:#fff;">
+        <h3 style="text-align: center;font: 500 22px/60px 'microsoft yahei'">修改用户信息</h3>
+        <form method="post" style="padding: 40px 80px; ">
+            <div class="form-group">
+                <label for="username">用户名：</label>
+                <input type="text" class="form-control" id="username" name="username" disabled >
+            </div>
+            <div class="form-group">
+                <label>性别：</label>
+                <div class="radio">
+                    <label class="i-checks">
+                        <input type="radio" name="gender" id="male">
+                        <i></i>
+                        男
+                    </label>
+                    &nbsp;&nbsp;
+                    <label class="i-checks">
+                        <input type="radio" name="gender" id="female">
+                        <i></i>
+                        女
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="redstar">姓名：</label>
+                <input type="text" class="form-control" name="name" id="name" autocomplete="off" placeholder="请输入真实姓名"/>
+            </div>
+            <div class="form-group">
+                <label for="email">Eamil：</label>
+                <input type="text" class="form-control" name="email" id="email" disabled/>
+            </div>
+            <div class="form-group">
+                <label for="tel" class="redstar">手机号：</label>
+                <input type="text" class="form-control" name="telephone" id="tel" autocomplete="off" placeholder="请输入11位手机号"/>
+            </div>
+            <div class="form-group">
+                <label for="birthday" class="redstar">出生日期：</label>
+                <input type="date" class="form-control" name="birthday" id="birthday"/>
+            </div>
+            <div class="form-group" style="text-align: center">
+                <input class="btn btn-info" type="button" id="submitBtn" value="确认修改" />
+                <a class="btn btn-default" href="javascript:history.go(-1);">返回</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>

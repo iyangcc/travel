@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>黑马旅游网-登录</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/nav-include.js"></script>
+    <script src="js/getParameter.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<!--引入头部-->
+<div id="header"></div>
+<!--登录框-->
+<div class="lg_layout">
+    <div class="lg_title">
+        <a href="./index.html"><span><img src="images/login_logo.png" alt=""></span><span>黑马旅游</span></a>
+        <p>USER LOGIN</p>
+    </div>
+    <div class="lg_center">
+        <form method="post" id="loginForm">
+            <table>
+                <tr>
+                    <td><label for="user">用户名：</label></td>
+                    <td><input type="text" name="username" class="input_s" id="user" placeholder="请输入用户名"
+                               autocomplete="off"/></td>
+                </tr>
+                <tr>
+                    <td><label for="password">密码：</label></td>
+                    <td><input type="password" name="password" class="input_s" id="password" placeholder="请输入密码"
+                               autocomplete="off"/></td>
+                </tr>
+                <tr>
+                    <td><label for="checkcode">验证码：</label></td>
+                    <td><input type="text" name="verifycode" class="input_s" id="checkcode" placeholder="请输入验证码" autocomplete="off"
+                               style="width: 140px;"/>
+                        <a href="javascript:void (0);"><img src="checkCode" onclick="changeCheckCode(this)"
+                                                            title="看不清点击刷新" id="vcode"/></a></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="登  录"></td>
+                </tr>
+            </table>
+        </form>
+        <!-- 出错显示的信息框 -->
+        <div class="alert alert-warning alert-dismissible" role="alert" id="errorMsg">
+            <button type="button" class="close" data-dismiss="alert">
+                <span>&times</span></button>
+            <span id="msg"></span>
+        </div>
+    </div>
+    <div class="lg_register">
+        <div class="auto_login fl">
+            <input type="checkbox" class="checkbox" id="ck_rmbUser" name="rmb">
+            <span>自动登录</span>
+        </div>
+        <div class="fr">
+            <p>没有账号？<a href="./register.html">立即注册</a></p>
+        </div>
+    </div>
+</div>
+<script>
+    //图片点击事件
+    function changeCheckCode(img) {
+        img.src = "checkCode?" + new Date().getTime();
+    }
+
+    $(function () {
+        var go = getParameter("go");
+        function login() {
+            haveValue();
+            if($("#user").val()!=="" && $("#password").val()!==""){
+                var params = {};
+                params.username = $("#user").val();
+                params.password = $("#password").val();
+                params.verifycode = $("#checkcode").val();
+                params.remberUser = $("#ck_rmbUser").is(":checked");
+                $.post("user/login",params,function (data) {
+                    if(data.status){
+                        var isChecked = params.remberUser;
+                        //勾选了自动登录或记住密码
+                        if(isChecked){
+                            $.cookie("username",$("#user").val(),{expires:7,path:"/"});
+                            $.cookie("password",$("#password").val(),{expires:7,path:"/"});
+                        }else{
+                            $.cookie("username",null,{ expires: -1,path:"/"});
+                            $.cookie("password",null,{ expires: -1,path:"/" });
+                        }
+                        if(go){
+                            //回退并刷新页面
+                             location.replace(document.referrer);
+                        }else{
+                            location.href = "index.html";
+                        }
+
+                    }else{
+                        changeCheckCode($("#vcode")[0]);
+                        showMsg(data.errorMsg);
+                    }
+                });
+            }
+            return false;
+        }
+
+        function haveValue(){
+            if($("#user").val()===""){
+                $("#user").css("border","2px solid red");
+            }else{
+                $("#user").css("border","");
+            }
+            if($("#password").val()===""){
+                $("#password").css("border","2px solid red");
+            }else{
+                $("#password").css("border","");
+            }
+        }
+
+        function showMsg(data){
+            $("#errorMsg").show();
+            $("#msg").text(data);
+        }
+
+        function hideMsg(){
+            $("#errorMsg").hide();
+        }
+
+        $("#loginForm").submit(login);
+
+        hideMsg();
+
+        //自动添加用户名与密码
+        (function () {
+            var user = $.cookie("username");
+            var pwd = $.cookie("password");
+            if(user!=null && user!=="" && pwd!=null && pwd!==""){
+                $("#user").val(user);
+                $("#password").val(pwd);
+                $("#ck_rmbUser").attr("checked","checked");
+                login();
+            }
+        })();
+    });
+</script>
+</body>
+
+</html>
